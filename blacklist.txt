@@ -21,3 +21,5 @@ byte squre
 mcq
 fill up
 jee
+Molecular
+Physical
