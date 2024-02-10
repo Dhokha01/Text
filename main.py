@@ -57,37 +57,5 @@ async def delete_blacklisted_messages(client, message):
     except Exception as e:
         print(f"Error processing message: {e}")
 
-import telegramBotApi from "../../telegram_bot_api.app.mjs";
-
-export default {
-  key: "telegram_bot_api-delete-message",
-  name: "Delete a Message",
-  description: "Deletes a message.
-  version: "0.0.5",
-  type: "action",
-  props: {
-    telegramBotApi,
-    chatId: {
-      propDefinition: [
-        telegramBotApi,
-        "chatId",
-        " editchatdel"
-      ],
-    },
-    messageId: {
-      propDefinition: [
-        telegramBotApi,
-        "messageId",
-      ],
-    },
-  },
-  async run({ $ }) {
-    const resp = await this.telegramBotApi.deleteMessage(this.chatId, this.messageId);
-    $.export("$summary", Successfully deleted the message from chat, "${this.chatId}");
-    return resp;
-  },
-};
-
-
 print("Bot started")
 app.run()
