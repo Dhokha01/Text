@@ -30,7 +30,7 @@ def normalize_text(text):
     return unicodedata.normalize('NFKD', text)
 
 def has_special_font(text):
-    for char in text:
+    for chat in text:
         for font_style in font_library.values():
             if char in font_style:
                 return True
