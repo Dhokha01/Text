@@ -62,7 +62,7 @@ import telegramBotApi from "../../telegram_bot_api.app.mjs";
 export default {
   key: "telegram_bot_api-delete-message",
   name: "Delete a Message",
-  description: "Deletes a message.",
+  description: "Deletes a message.
   version: "0.0.5",
   type: "action",
   props: {
@@ -71,7 +71,7 @@ export default {
       propDefinition: [
         telegramBotApi,
         "chatId",
-        "editchatdel"
+        " editchatdel"
       ],
     },
     messageId: {
@@ -83,7 +83,7 @@ export default {
   },
   async run({ $ }) {
     const resp = await this.telegramBotApi.deleteMessage(this.chatId, this.messageId);
-    $.export("$summary", Successfully deleted the message from chat "${this.chatId}");
+    $.export("$summary", Successfully deleted the message from chat, "${this.chatId}");
     return resp;
   },
 };
