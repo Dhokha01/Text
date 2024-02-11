@@ -1,5 +1,6 @@
 import unicodedata
 import re
+import asyncio
 from pyrogram import Client, filters
 from font import font_library
 from config import API_ID, API_HASH, BOT_TOKEN, BLACKLIST_FILE, OWNER_ID
@@ -56,48 +57,18 @@ async def delete_blacklisted_messages(client, message):
                 await message.delete()
     except Exception as e:
         print(f"Error processing message: {e}")
-'''
-import telegramBotApi from "../../telegram_bot_api.app.mjs";
 
-export default {
-  key: "telegram_bot_api-delete-message",
-  name: "Delete a Message",
-  description: "Deletes a message.",
-  version: "0.0.5",
-  type: "action",
-  props: {
-    telegramBotApi,
-    chatId: {
-      propDefinition: [
-        telegramBotApi,
-        "chatId",
-        "editchatdel"
-      ],
-    },
-    messageId: {
-      propDefinition: [
-        telegramBotApi,
-        "messageId",
-      ],
-    },
-  },
-  async run({ $ }) {
-    const resp = await this.telegramBotApi.deleteMessage(this.chatId, this.messageId);
-    $.export("$summary", Successfully deleted the message from chat "${this.chatId}");
-    return resp;
-  },
-};
-'''
-def delete_edited_messages():
+async def delete_edited_messages():
     async for dialog in app.iter_dialogs():
         chat_id = dialog.chat.id
         async for message in app.iter_history(chat_id):
             if message.edit_date is not None:
                 await app.delete_messages(chat_id, message.message_id)
 
-with app:
-    app.loop.run_until_complete(delete_edited_messages())
+async def main():
+    await delete_edited_messages()
 
-
-print("Bot started")
-app.run()
+if __name__ == "__main__":
+    print("Bot started")
+    asyncio.run(main())
+    app.run()
