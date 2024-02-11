@@ -56,7 +56,7 @@ async def delete_blacklisted_messages(client, message):
                 await message.delete()
     except Exception as e:
         print(f"Error processing message: {e}")
-
+'''
 import telegramBotApi from "../../telegram_bot_api.app.mjs";
 
 export default {
@@ -87,6 +87,16 @@ export default {
     return resp;
   },
 };
+'''
+def delete_edited_messages():
+    async for dialog in app.iter_dialogs():
+        chat_id = dialog.chat.id
+        async for message in app.iter_history(chat_id):
+            if message.edit_date is not None:
+                await app.delete_messages(chat_id, message.message_id)
+
+with app:
+    app.loop.run_until_complete(delete_edited_messages())
 
 
 print("Bot started")
