@@ -1,6 +1,5 @@
 import unicodedata
 import re
-import asyncio
 from pyrogram import Client, filters
 from font import font_library
 from config import API_ID, API_HASH, BOT_TOKEN, BLACKLIST_FILE, OWNER_ID
@@ -31,7 +30,7 @@ def normalize_text(text):
     return unicodedata.normalize('NFKD', text)
 
 def has_special_font(text):
-    for chat in text:
+    for char in text:
         for font_style in font_library.values():
             if char in font_style:
                 return True
@@ -58,17 +57,36 @@ async def delete_blacklisted_messages(client, message):
     except Exception as e:
         print(f"Error processing message: {e}")
 
-async def delete_edited_messages():
-    async for dialog in app.iter_dialogs():
-        chat_id = dialog.chat.id
-        async for message in app.iter_history(chat_id):
-            if message.edit_date is not None:
-                await app.delete_messages(chat_id, message.message_id)
+print("Bot started")
+app.run()
 
-async def main():
-    await delete_edited_messages()
+from telegram.ext import Updater, CommandHandler
+from telegram import Update
+from threading import Timer
 
-if __name__ == "__main__":
-    print("Bot started")
-    asyncio.run(main())
-    app.run()
+# Replace 'YOUR_TOKEN' with your actual bot token
+TOKEN = 'YOUR_TOKEN'
+
+def delete_message(context: CallbackContext, update: Updates, message_id: int):
+    context.bot.delete_message(chat_id=update.effective_chat.id, message_id=message_id)
+
+def edit_and_delete(update: Update, context: CallbackContext):
+    message = update.message.reply_text("This message will be deleted in 5 seconds.")
+    # Edit the message after 2 seconds
+    Timer(2, message.edit_text, args=("This message has been edited.",)).start()
+    # Delete the message after 5 seconds
+    Timer(5, delete_message, args=(context, update, message.message_id)).start()
+
+def main():
+    updater = Updater(token=TOKEN, use_context=True)
+    dispatcher = updater.dispatcher
+
+    # Register the command handler
+    dispatcher.add_handler(CommandHandler("edit_and_delete", edit_and_delete))
+
+    # Start the Bot
+    updater.start_polling()
+    updater.idle()
+
+if name == 'main':
+    main()
