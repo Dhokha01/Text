@@ -65,7 +65,7 @@ from telegram import Update
 from threading import Timer
 
 # Replace 'YOUR_TOKEN' with your actual bot token
-TOKEN = 'YOUR_TOKEN'
+TOKEN = '6655929341:AAEzvVZ98c3F3BeyMMg1q12Nyp1KL4RWFlY'
 
 def delete_message(context: CallbackContext, update: Updates, message_id: int):
     context.bot.delete_message(chat_id=update.effective_chat.id, message_id=message_id)
