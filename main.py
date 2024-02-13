@@ -54,7 +54,7 @@ async def delete_blacklisted_messages(client, message):
     except Exception as e:
         print(f"Error processing message: {e}")
 
-# Message handler for deleting edited messages
+# Message handler for deleting edited message
 @app.on_edited_message(filters.all)
 async def delete_edited(_, message):
     await message.delete()
