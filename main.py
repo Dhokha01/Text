@@ -1,7 +1,7 @@
 import unicodedata
 import re
 from pyrogram import Client, filters
-from config import
+from config import *
 
 # Initialize Pyrogram client
 app = Client("zoney", api_id=API_ID, api_hash=API_HASH, bot_token=BOT_TOKEN)
