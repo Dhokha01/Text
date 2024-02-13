@@ -1,9 +1,10 @@
 import unicodedata
 import re
 from pyrogram import Client, filters
+from config import
 
 # Initialize Pyrogram client
-app = Client("zoney")
+app = Client("zoney", api_id=API_ID, api_hash=API_HASH, bot_token=BOT_TOKEN)
 
 # Load blacklist from file
 def load_blacklist():
