@@ -1,10 +1,11 @@
-
-FROM debian:latest 
-
+FROM python:3.10.4-slim-buster
 RUN apt update && apt upgrade -y
-RUN apt install git curl python3-pip ffmpeg -y
-RUN pip3 install -U pip
-COPY . /app
+RUN apt-get -y install git
+RUN apt-get install -y wget python3-pip curl bash neofetch ffmpeg software-properties-common
+COPY requirements.txt .
+
+RUN pip3 install wheel
+RUN pip3 install --no-cache-dir -U -r requirements.txt
 WORKDIR /app
-RUN pip3 install -U -r requirements.txt
+COPY . .
 CMD python3 main.py
